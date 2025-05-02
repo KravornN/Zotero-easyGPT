@@ -252,12 +252,17 @@ export class UIExampleFactory {
       }) => {
         const pdftext = body.querySelector("#pdftext") as HTMLTextAreaElement;
         const userquery = body.querySelector("#userquery") as HTMLTextAreaElement;
-        const result_p = body.querySelector("#result") as HTMLElement;
+        const result_p = body.querySelector("#result") as HTMLTextAreaElement;
         const uquery_btn = body.querySelector("#uquery_btn") as HTMLElement;
         const summarize_btn = body.querySelector("#summarize_btn") as HTMLElement;
         const clear_btn = body.querySelector("#clear_btn") as HTMLElement;
         const add_selection_btn = body.querySelector("#add_selection_btn") as HTMLElement;
         const add_fulltext_btn = body.querySelector("#add_fulltext_btn") as HTMLElement;
+
+        // 设置AI输出框为只读
+        if (result_p) {
+          result_p.readOnly = true;
+        }
 
         // Add hover effects to buttons
         const buttons = body.querySelectorAll("button");
@@ -634,12 +639,17 @@ export class UIExampleFactory {
       }) => {
         const pdftext = body.querySelector("#pdftext") as HTMLTextAreaElement;
         const userquery = body.querySelector("#userquery") as HTMLTextAreaElement;
-        const result_p = body.querySelector("#result") as HTMLElement;
+        const result_p = body.querySelector("#result") as HTMLTextAreaElement;
         const uquery_btn = body.querySelector("#uquery_btn") as HTMLElement;
         const summarize_btn = body.querySelector("#summarize_btn") as HTMLElement;
         const clear_btn = body.querySelector("#clear_btn") as HTMLElement;
         const add_selection_btn = body.querySelector("#add_selection_btn") as HTMLElement;
         const add_fulltext_btn = body.querySelector("#add_fulltext_btn") as HTMLElement;
+
+        // 设置AI输出框为只读
+        if (result_p) {
+          result_p.readOnly = true;
+        }
 
         // Add hover effects to buttons
         const buttons = body.querySelectorAll("button");
