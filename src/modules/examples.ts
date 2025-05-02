@@ -485,7 +485,8 @@ export class UIExampleFactory {
           const apiUrl = getPref('base') as string;
           const model = getPref('model') as string;
 
-          var user_qtxt = pdftext.value + '\n' + userquery.value;
+          // 只发送pdf内容，不包含用户输入
+          var user_qtxt = pdftext.value;
 
           let system_prompt = '';
           if (lang === 'en-US') {
@@ -883,7 +884,8 @@ export class UIExampleFactory {
           const apiUrl = getPref('base') as string;
           const model = getPref('model') as string;
 
-          var user_qtxt = pdftext.value + '\n' + userquery.value;
+          // 只发送pdf内容，不包含用户输入
+          var user_qtxt = pdftext.value;
 
           let system_prompt = '';
           if (lang === 'en-US') {
