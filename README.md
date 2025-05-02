@@ -18,6 +18,8 @@ It supports any API compatible with the OpenAI specification.
 * **API Key:** 填入你的硅基流动 API Key
 * 配置完成后即可使用。
 
+**也可以使用其他兼容OpenAI的API服务**
+
 ### International Users
 
 You can use OpenAI or other services compatible with the OpenAI API specification.
@@ -29,7 +31,7 @@ You can use OpenAI or other services compatible with the OpenAI API specificatio
 * **API Key:** Enter your OpenAI API Key.
 * Once configured, it's ready to use.
 
-**Using other compatible services (e.g., Azure etc.):**
+**Using other compatible services (e.g., Azure etc.)**
 
 
 ## Reference
