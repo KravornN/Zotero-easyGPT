@@ -276,8 +276,6 @@ export class UIExampleFactory {
 
         function clear_content() {
           pdftext.value = '';
-          userquery.value = '';
-          result_p.textContent = 'Content cleared.';
         }
 
         let lastSelectedText = '';
@@ -387,6 +385,7 @@ export class UIExampleFactory {
             btnSpan.textContent = "Processing...";
           }
           uquery_btn.style.backgroundColor = "var(--color-state-active)";
+          result_p.textContent = '';
 
           const OPENAI_API_KEY = getPref('input') as string;
           const apiUrl = getPref('base') as string;
@@ -469,6 +468,7 @@ export class UIExampleFactory {
             btnSpan.textContent = "Processing...";
           }
           summarize_btn.style.backgroundColor = "var(--color-state-active)";
+          result_p.textContent = '';
 
           const OPENAI_API_KEY = getPref('input') as string;
           const apiUrl = getPref('base') as string;
@@ -658,8 +658,6 @@ export class UIExampleFactory {
 
         function clear_content() {
           pdftext.value = '';
-          userquery.value = '';
-          result_p.textContent = 'Content cleared.';
         }
 
         let lastSelectedText = '';
@@ -769,6 +767,7 @@ export class UIExampleFactory {
             btnSpan.textContent = "Processing...";
           }
           uquery_btn.style.backgroundColor = "var(--color-state-active)";
+          result_p.textContent = '';
 
           const OPENAI_API_KEY = getPref('input') as string;
           const apiUrl = getPref('base') as string;
@@ -851,6 +850,7 @@ export class UIExampleFactory {
             btnSpan.textContent = "Processing...";
           }
           summarize_btn.style.backgroundColor = "var(--color-state-active)";
+          result_p.textContent = '';
 
           const OPENAI_API_KEY = getPref('input') as string;
           const apiUrl = getPref('base') as string;
