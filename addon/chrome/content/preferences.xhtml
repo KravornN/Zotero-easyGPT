@@ -17,37 +17,10 @@
     <html:input type="text" id="__addonRef__-model" style="padding: 3px 7px; border: 1px solid #bbb; border-radius: 2px; font-size: 13px; width: 100%;" preference="__prefsPrefix__.model"></html:input>
 
     <html:label for="__addonRef__-lang" style="font-size: 13px; color: var(--color-text-primary); height: 28px; display: flex; align-items: center;" data-l10n-id="pref-lang"></html:label>
-    <html:div style="display: flex; gap: 24px; align-items: center; height: 28px;">
-      <html:label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-        <html:input type="radio" name="__addonRef__-lang-radio" value="zh-CN" style="accent-color: #2563eb; width: 16px; height: 16px; margin: 0;" preference="__prefsPrefix__.lang"/>
-        <span data-l10n-id="pref-lang-zh"></span>
-      </html:label>
-      <html:label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-        <html:input type="radio" name="__addonRef__-lang-radio" value="en-US" style="accent-color: #2563eb; width: 16px; height: 16px; margin: 0;" preference="__prefsPrefix__.lang"/>
-        <span data-l10n-id="pref-lang-en"></span>
-      </html:label>
-    </html:div>
+    <html:select id="__addonRef__-lang" style="padding: 3px 7px; border: 1px solid #bbb; border-radius: 2px; font-size: 13px; width: 100%; background-color: var(--color-background-primary); color: var(--color-text-primary); height: 28px;" preference="__prefsPrefix__.lang">
+      <html:option value="zh-CN" data-l10n-id="pref-lang-zh"></html:option>
+      <html:option value="en-US" data-l10n-id="pref-lang-en"></html:option>
+    </html:select>
   </html:div>
   
 </groupbox>
-<script type="application/javascript">
-(function() {
-  // 获取Zotero插件前缀
-  const prefsPrefix = "extensions.zotero.zoteroeasygpt";
-  // 获取Zotero.Prefs对象
-  const Zotero = window.opener?.Zotero || window.Zotero;
-  if (!Zotero) return;
-  // 获取当前语言设置
-  const lang = Zotero.Prefs.get(prefsPrefix + ".lang", true) || "zh-CN";
-  // 设置radio选中
-  const radios = document.querySelectorAll('input[name="__addonRef__-lang-radio"]');
-  radios.forEach(radio => {
-    radio.checked = radio.value === lang;
-    radio.addEventListener('change', function() {
-      if (this.checked) {
-        Zotero.Prefs.set(prefsPrefix + ".lang", this.value, true);
-      }
-    });
-  });
-})();
-</script>
