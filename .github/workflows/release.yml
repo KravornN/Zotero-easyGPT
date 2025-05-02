@@ -1,0 +1,69 @@
+name: Manual Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release version tag (e.g. v0.0.1)'
+        required: true
+        default: 'v0.0.1'
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Update version in package.json (if needed)
+        run: |
+          INPUT_TAG="${{ github.event.inputs.tag }}"
+          VERSION=${INPUT_TAG#v} # Remove leading "v"
+
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          echo "Current version: $CURRENT_VERSION"
+          echo "Target version: $VERSION"
+
+          if [ "$CURRENT_VERSION" = "$VERSION" ]; then
+            echo "Version already set to $VERSION, skipping npm version"
+          else
+            npm version "$VERSION" --no-git-tag-version
+            echo "Updated package.json version to $VERSION"
+          fi
+
+      - name: Commit updated package.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json || true
+          git commit -m "chore: release ${{ github.event.inputs.tag }}" || echo "No changes to commit"
+          git push origin HEAD
+
+      - name: Create Git Tag
+        run: |
+          git tag ${{ github.event.inputs.tag }}
+          git push origin ${{ github.event.inputs.tag }}
+
+      - name: Build project
+        run: npm run build
+
+      - name: Release to GitHub
+        run: npm run release

@@ -1,0 +1,20 @@
+<linkset>
+  <html:link rel="localization" href="__addonRef__-preferences.ftl" />
+</linkset>
+<groupbox style="padding: 14px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" onload="Zotero.__addonInstance__.hooks.onPrefsEvent('load', { window });">
+  <label>
+    <html:h2 style="margin-top: 0; margin-bottom: 14px; font-size: 16px; font-weight: 600; color: var(--color-text-primary);" data-l10n-id="pref-title"></html:h2>
+  </label>
+
+  <html:div style="display: grid; grid-template-columns: 66px 1fr; gap: 10px; margin-bottom: 18px; align-items: center;">
+    <html:label for="__addonRef__-input" style="font-size: 13px; color: var(--color-text-primary);" data-l10n-id="pref-input"></html:label>
+    <html:input type="text" id="__addonRef__-input" style="padding: 3px 7px; border: 1px solid #bbb; border-radius: 2px; font-size: 13px; width: 100%;" preference="__prefsPrefix__.input"></html:input>
+    
+    <html:label for="__addonRef__-base" style="font-size: 13px; color: var(--color-text-primary);" data-l10n-id="pref-base"></html:label>
+    <html:input type="text" id="__addonRef__-base" style="padding: 3px 7px; border: 1px solid #bbb; border-radius: 2px; font-size: 13px; width: 100%;" preference="__prefsPrefix__.base"></html:input>
+    
+    <html:label for="__addonRef__-model" style="font-size: 13px; color: var(--color-text-primary);" data-l10n-id="pref-model"></html:label>
+    <html:input type="text" id="__addonRef__-model" style="padding: 3px 7px; border: 1px solid #bbb; border-radius: 2px; font-size: 13px; width: 100%;" preference="__prefsPrefix__.model"></html:input>
+  </html:div>
+  
+</groupbox>
