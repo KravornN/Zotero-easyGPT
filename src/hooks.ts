@@ -61,7 +61,7 @@ async function onMainWindowLoad(win: Window): Promise<void> {
   //   text: `[30%] ${getString("startup-begin")}`,
   // });
 
-  UIExampleFactory.registerReaderItemPaneSection(win);   
+  UIExampleFactory.registerItemPaneSection();   
   UIExampleFactory.registerStyleSheet(win);
 
   // UIExampleFactory.registerRightClickMenuItem(); // 移除主界面论文条目右键菜单
