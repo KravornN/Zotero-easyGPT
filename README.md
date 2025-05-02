@@ -16,11 +16,11 @@ A Zotero plugin that integrates GPT functionalities into the PDF reader sidebar.
 
 - [x] 📄 **PDF Sidebar Integration**: Seamlessly appears in the Zotero PDF reader sidebar for quick access.
 - [x] 🔍 **Text Selection & Full Text Support**: Insert selected text or the entire PDF content into the AI query area with one click.
-- [x] 💬 **Ask AI Anything**: Directly ask GPT questions about the PDF content and get instant answers in your chosen language (Chinese or English).
-- [x] 📝 **One-Click Summarization**: Summarize the PDF content with a single click, supporting both Chinese and English output.
+- [x] 💬 **Ask AI Anything**: Directly ask GPT questions about the PDF content and get instant answers.
+- [x] 📝 **One-Click Summarization**: Summarize the PDF content with a single click.
 - [x] 🌐 **Language Switch**: Easily switch between Chinese and English for prompts and AI responses via the plugin settings.
-- [x] 🔌 **OpenAI-Compatible**: Works with any API compatible with the OpenAI specification (OpenAI, Azure, 硅基流动等)。
-- [x] 🎨 **User-Friendly UI**: Clean, intuitive interface with copyable, read-only AI output.
+- [x] 🔌 **OpenAI-Compatible**: Works with any API compatible with the OpenAI specification.
+- [x] 🎨 **User-Friendly UI**: Clean, intuitive interface with copyable AI output.
 - [x] ⚙️ **Customizable Model & Endpoint**: Configure API base URL, model, and key to fit your needs.
 
 
