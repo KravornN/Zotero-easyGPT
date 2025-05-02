@@ -152,8 +152,6 @@ export class UIExampleFactory {
     });
   }
 
-
-
   @example
   static registerWindowMenuWithSeparator() {
     ztoolkit.Menu.register("menuFile", {
@@ -244,80 +242,7 @@ export class UIExampleFactory {
       },
       onRender: ({ body, item, editable, tabType }) => {
 
-
-
-
-
       },
-    });
-  }
-
-  @example
-  static async registerReaderItemPaneSection(win: Window) {
-    const doc = win.document;
-    Zotero.ItemPaneManager.registerSection({
-      paneID: "reader-example",
-      pluginID: config.addonID,
-      header: {
-        l10nID: getLocaleID("item-section-example2-head-text"),
-        // Optional
-        l10nArgs: `{"status": "Initialized"}`,
-        // Can also have a optional dark icon 
-        icon: `chrome://${config.addonRef}/content/icons/openai@0.4x.png`,
-      },
-      sidenav: {
-        l10nID: getLocaleID("item-section-example2-sidenav-tooltip"),
-        icon: `chrome://${config.addonRef}/content/icons/openai@0.5x.png`,
-      },
-      // Optional
-      bodyXHTML: `<html:div style="display: flex; flex-direction: column; padding: 4px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 100%; box-sizing: border-box; height: 100%; font-size: 12px; color: var(--color-text-primary);">
-        <html:div style="display: flex; flex-direction: row; gap: 4px; margin-bottom: 8px; width: 100%;">
-          <html:button id="add_selection_btn" style="flex-grow: 1; padding: 4px 8px; background-color: var(--color-background-secondary); border: 1px solid var(--color-border); border-radius: 2px; cursor: pointer; font-size: 14px; color: var(--color-text-primary);">
-            <html:span>Add Selection</html:span>
-          </html:button>
-          <html:button id="add_fulltext_btn" style="flex-grow: 1; padding: 4px 8px; background-color: var(--color-background-secondary); border: 1px solid var(--color-border); border-radius: 2px; cursor: pointer; font-size: 14px; color: var(--color-text-primary);">
-            <html:span>Add Full Text</html:span>
-          </html:button>
-          <html:button id="clear_btn" style="flex-grow: 1; padding: 4px 8px; background-color: var(--color-background-secondary); border: 1px solid var(--color-border); border-radius: 2px; cursor: pointer; font-size: 14px; color: var(--color-text-primary);">
-            <html:span>Clear</html:span>
-          </html:button>
-        </html:div>
-        <html:textarea id="uquery" style="width: 100%; box-sizing: border-box; flex-grow: 1; min-height: 120px; padding: 6px; font-size: 12px; border: 1px solid var(--color-border); border-radius: 2px; margin-bottom: 8px; resize: vertical; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: var(--color-background-primary); color: var(--color-text-primary);" placeholder="Enter your query here..."></html:textarea>
-        <html:div style="display: flex; margin-bottom: 8px; width: 100%; gap: 4px;">
-          <html:button id="uquery_btn" style="flex-grow: 1; padding: 4px 8px; background-color: var(--color-background-secondary); border: 1px solid var(--color-border); border-radius: 2px; cursor: pointer; font-size: 14px; color: var(--color-text-primary);">
-            <html:span>Ask AI</html:span>
-          </html:button>
-          <html:button id="summarize_btn" style="flex-grow: 1; padding: 4px 8px; background-color: var(--color-background-secondary); border: 1px solid var(--color-border); border-radius: 2px; cursor: pointer; font-size: 14px; color: var(--color-text-primary);">
-            <html:span>Summarize</html:span>
-          </html:button>
-        </html:div>
-        <html:textarea id="result" style="width: 100%; box-sizing: border-box; flex-grow: 2; min-height: 200px; padding: 6px; font-size: 12px; border: 1px solid var(--color-border); border-radius: 2px; resize: vertical; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: var(--color-background-primary); color: var(--color-text-primary); word-wrap: break-word;" placeholder="AI response will appear here..."></html:textarea>
-      </html:div>`,
-      // Optional, Called when the section is first created, must be synchronous
-      onInit: ({ item }) => {
-        ztoolkit.log("Section init!", item?.id);
-      },
-      // Optional, Called when the section is destroyed, must be synchronous
-      onDestroy: (props) => {
-        ztoolkit.log("Section destroy!");
-      },
-      // Optional, Called when the section data changes (setting item/mode/tabType/inTrash), must be synchronous. return false to cancel the change
-      onItemChange: ({ item, setEnabled, tabType }) => {
-        ztoolkit.log(`Section item data changed to ${item?.id}`);
-        setEnabled(tabType === "reader");
-        return true;
-      },
-
-      onRender: ({
-        body,
-        item,
-        setL10nArgs,
-        setSectionSummary,
-        setSectionButtonStatus,
-      }) => {
-
-      },
-
       onAsyncRender: async ({
         body,
         item,
@@ -325,21 +250,19 @@ export class UIExampleFactory {
         setSectionSummary,
         setSectionButtonStatus,
       }) => {
-
-
-        const uquery = body.querySelector("#uquery") as HTMLTextAreaElement;
+        const pdftext = body.querySelector("#pdftext") as HTMLTextAreaElement;
+        const userquery = body.querySelector("#userquery") as HTMLTextAreaElement;
+        const result_p = body.querySelector("#result") as HTMLElement;
         const uquery_btn = body.querySelector("#uquery_btn") as HTMLElement;
+        const summarize_btn = body.querySelector("#summarize_btn") as HTMLElement;
         const clear_btn = body.querySelector("#clear_btn") as HTMLElement;
         const add_selection_btn = body.querySelector("#add_selection_btn") as HTMLElement;
         const add_fulltext_btn = body.querySelector("#add_fulltext_btn") as HTMLElement;
-        const result_p = body.querySelector("#result") as HTMLElement;
-        const summarize_btn = body.querySelector("#summarize_btn") as HTMLElement;
 
         // Add hover effects to buttons
         const buttons = body.querySelectorAll("button");
         buttons.forEach(button => {
           button.addEventListener("mouseover", () => {
-            // 亮色模式下稍微变暗，暗色模式下稍微变亮
             if (window.document.documentElement.getAttribute('theme') === 'dark') {
               button.style.backgroundColor = "var(--color-state-hover-dark)";
             } else {
@@ -347,31 +270,26 @@ export class UIExampleFactory {
             }
           });
           button.addEventListener("mouseout", () => {
-            // 恢复原来的背景色
             button.style.backgroundColor = "var(--color-background-secondary)";
           });
         });
 
         function clear_content() {
-          uquery.value = '';
+          pdftext.value = '';
+          userquery.value = '';
           result_p.textContent = 'Content cleared.';
         }
 
-        // 添加一个存储最近选中文本的变量
         let lastSelectedText = '';
         let textSelectionListenerRegistered = false;
 
-        // 改进后的Reader事件监听器，获取选中的文本
         function registerTextSelectionListener() {
-          // 如果已经注册了，不要重复注册
           if (textSelectionListenerRegistered) {
             return;
           }
 
-          // 监听renderTextSelectionPopup事件 - 这是在PDF中选择文本时触发的事件
           try {
             Zotero.Reader.registerEventListener('renderTextSelectionPopup', (event: any) => {
-              // 从事件参数中获取选中的文本 - 只捕获文本而不修改弹窗
               if (event.params && event.params.annotation && event.params.annotation.text) {
                 lastSelectedText = event.params.annotation.text.trim();
                 ztoolkit.log("Selected text captured:", lastSelectedText);
@@ -385,44 +303,37 @@ export class UIExampleFactory {
           }
         }
 
-        // 在页面初始化时注册监听器
         registerTextSelectionListener();
 
-        // 简化的add_selection函数，使用存储的选中文本
         async function add_selection() {
           try {
             result_p.textContent = 'Getting selection...';
-            
-            // 首先尝试使用我们已经捕获的最后选择的文本
+
             if (lastSelectedText) {
-              uquery.value += lastSelectedText + '\n\n';
+              pdftext.value += lastSelectedText + '\n\n';
               result_p.textContent = 'Selected text added successfully!';
               return;
             }
-            
-            // 获取当前活动的Reader标签页
+
             const currentTabID = Zotero.Reader.getTabIDFromElement(window.document.activeElement);
             if (!currentTabID) {
               result_p.textContent = 'No active PDF reader found. Please open a PDF and select some text.';
               return;
             }
-            
-            // 获取Reader实例
+
             const reader = Zotero.Reader.getByTabID(currentTabID);
             if (!reader) {
               result_p.textContent = 'Cannot access the current PDF reader.';
               return;
             }
-            
-            // 尝试获取选中的文本（简化版本）
+
             try {
-              // 尝试访问reader._iframe以直接获取选中的文本
               if (reader._iframe && reader._iframe.contentWindow) {
                 const win = reader._iframe.contentWindow;
                 const selection = win.getSelection();
                 if (selection && selection.toString().trim()) {
                   const selectedText = selection.toString().trim();
-                  uquery.value += selectedText + '\n\n';
+                  pdftext.value += selectedText + '\n\n';
                   result_p.textContent = 'Selected text added successfully!';
                   return;
                 }
@@ -430,10 +341,8 @@ export class UIExampleFactory {
             } catch (e) {
               ztoolkit.log("Failed to get selection:", e);
             }
-            
-            // 如果无法获取文本，提供更简单的指导
+
             result_p.textContent = 'Could not retrieve selected text. Please select text in PDF first, then click "Add Selection" button.';
-            
           } catch (error) {
             ztoolkit.log("Error in add_selection:", error);
             result_p.textContent = 'Error getting selected text. Please try copying and pasting manually.';
@@ -442,10 +351,8 @@ export class UIExampleFactory {
 
         async function add_fulltext() {
           try {
-            // Show loading message
             result_p.textContent = 'Extracting full text from PDF...';
-            
-            // Get the full text of the PDF
+
             const attachments = await item.getAttachments();
             let pdfText = null;
 
@@ -458,9 +365,8 @@ export class UIExampleFactory {
             }
 
             if (pdfText) {
-              // 优化PDF文本格式
               const cleanedText = cleanPdfText(pdfText);
-              uquery.value += cleanedText + '\n\n';
+              pdftext.value += cleanedText + '\n\n';
               result_p.textContent = 'Full text added successfully.';
             } else {
               result_p.textContent = 'Could not extract text from PDF. The PDF may not be text-based or may be encrypted.';
@@ -476,21 +382,18 @@ export class UIExampleFactory {
         add_fulltext_btn.addEventListener('click', add_fulltext);
 
         async function ask_question() {
-          // 获取按钮内的span元素
           const btnSpan = uquery_btn.querySelector("span");
           if (btnSpan) {
             btnSpan.textContent = "Processing...";
           }
-          // 使用--color-state-active变量替代固定颜色
           uquery_btn.style.backgroundColor = "var(--color-state-active)";
-          
+
           const OPENAI_API_KEY = getPref('input') as string;
           const apiUrl = getPref('base') as string;
           const model = getPref('model') as string;
 
-          var user_qtxt = uquery.value;
-          
-          // Use default research assistant prompt
+          var user_qtxt = pdftext.value + '\n' + userquery.value;
+
           var system_prompt = '请你扮演一位学术助手，根据提供的论文内容，使用中文回答我的问题。请确保表达清晰准确，不使用Markdown格式，保持纯文本输出。';
 
           if (!OPENAI_API_KEY || !apiUrl) {
@@ -498,7 +401,7 @@ export class UIExampleFactory {
             if (btnSpan) {
               btnSpan.textContent = "Ask AI";
             }
-            uquery_btn.style.backgroundColor = "var(--color-background-secondary)"; // 恢复默认颜色
+            uquery_btn.style.backgroundColor = "var(--color-background-secondary)";
             return;
           }
 
@@ -522,7 +425,7 @@ export class UIExampleFactory {
               throw new Error(`Error: ${response.status} ${response.statusText}`);
             } else {
               result_p.textContent = '';
-              
+
               const reader = response.body?.getReader();
               const decoder = new TextDecoder();
               let done = false;
@@ -533,7 +436,7 @@ export class UIExampleFactory {
                 if (value) {
                   const chunk = decoder.decode(value, { stream: true });
                   const lines = chunk.split('\n').filter(line => line.trim() !== '');
-                  
+
                   for (var line of lines) {
                     try {
                       line = line.replace('data:', '')
@@ -556,27 +459,23 @@ export class UIExampleFactory {
             if (btnSpan) {
               btnSpan.textContent = "Ask AI";
             }
-            uquery_btn.style.backgroundColor = "var(--color-background-secondary)"; // 恢复默认颜色
+            uquery_btn.style.backgroundColor = "var(--color-background-secondary)";
           }
         }
 
-        // Add summarize function
         async function summarize_text() {
-          // 获取按钮内的span元素
           const btnSpan = summarize_btn.querySelector("span");
           if (btnSpan) {
             btnSpan.textContent = "Processing...";
           }
-          // 使用--color-state-active变量替代固定颜色
           summarize_btn.style.backgroundColor = "var(--color-state-active)";
-          
+
           const OPENAI_API_KEY = getPref('input') as string;
           const apiUrl = getPref('base') as string;
           const model = getPref('model') as string;
 
-          var user_qtxt = uquery.value;
-          
-          // Use summarize prompt in Chinese
+          var user_qtxt = pdftext.value + '\n' + userquery.value;
+
           var system_prompt = '请你扮演一位学术助手，阅读以下论文内容，并用简洁、清晰的中文总结其核心要点，适合快速理解重点。请仅保留关键信息，避免冗长解释。同时不使用Markdown格式，保持纯文本输出。';
 
           if (!OPENAI_API_KEY || !apiUrl) {
@@ -584,7 +483,7 @@ export class UIExampleFactory {
             if (btnSpan) {
               btnSpan.textContent = "Summarize";
             }
-            summarize_btn.style.backgroundColor = "var(--color-background-secondary)"; // 恢复默认颜色
+            summarize_btn.style.backgroundColor = "var(--color-background-secondary)";
             return;
           }
 
@@ -593,55 +492,55 @@ export class UIExampleFactory {
             if (btnSpan) {
               btnSpan.textContent = "Summarize";
             }
-            summarize_btn.style.backgroundColor = "var(--color-background-secondary)"; // 恢复默认颜色
+            summarize_btn.style.backgroundColor = "var(--color-background-secondary)";
             return;
           }
 
-            var requestData = {
+          var requestData = {
             model: model || 'gpt-3.5-turbo',
             messages: [
               { role: 'system', content: system_prompt },
               { role: 'user', content: user_qtxt }
             ],
-              stream: true,
-            };
+            stream: true,
+          };
 
-            try {
-              var response = await fetch(`${apiUrl}/v1/chat/completions`, {
-                method: 'POST',
-                headers: {
-                  'Authorization': `Bearer ${OPENAI_API_KEY}`,
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(requestData),
-              });
+          try {
+            var response = await fetch(`${apiUrl}/v1/chat/completions`, {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${OPENAI_API_KEY}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(requestData),
+            });
 
-              if (!response.ok) {
-                throw new Error(`Error: ${response.status} ${response.statusText}`);
-              } else {
-                result_p.textContent = '';
+            if (!response.ok) {
+              throw new Error(`Error: ${response.status} ${response.statusText}`);
+            } else {
+              result_p.textContent = '';
 
-                const reader = response.body?.getReader();
-                const decoder = new TextDecoder();
-                let done = false;
+              const reader = response.body?.getReader();
+              const decoder = new TextDecoder();
+              let done = false;
 
-                while (!done) {
-                  const { done: streamDone, value } = await reader!.read();
-                  done = streamDone;
-                  if (value) {
-                    const chunk = decoder.decode(value, { stream: true });
+              while (!done) {
+                const { done: streamDone, value } = await reader!.read();
+                done = streamDone;
+                if (value) {
+                  const chunk = decoder.decode(value, { stream: true });
                   const lines = chunk.split('\n').filter(line => line.trim() !== '');
 
-                    for (var line of lines) {
-                      try {
-                        line = line.replace('data:', '')
-                        const data = JSON.parse(line);
-                        if (data.choices && data.choices[0]) {
-                          const text = data.choices[0].delta?.content || '';
-                          result_p.textContent += text;
-                        }
-                      } catch (error) {
-                        ztoolkit.log("Could not parse JSON:", line);
+                  for (var line of lines) {
+                    try {
+                      line = line.replace('data:', '')
+                      const data = JSON.parse(line);
+                      if (data.choices && data.choices[0]) {
+                        const text = data.choices[0].delta?.content || '';
+                        result_p.textContent += text;
+                      }
+                    } catch (error) {
+                      ztoolkit.log("Could not parse JSON:", line);
                     }
                   }
                 }
@@ -654,22 +553,401 @@ export class UIExampleFactory {
             if (btnSpan) {
               btnSpan.textContent = "Summarize";
             }
-            summarize_btn.style.backgroundColor = "var(--color-background-secondary)"; // 恢复默认颜色
+            summarize_btn.style.backgroundColor = "var(--color-background-secondary)";
           }
         }
 
         uquery_btn.addEventListener('click', ask_question);
         summarize_btn.addEventListener('click', summarize_text);
       },
-      // Optional, Called when the section is toggled. Can happen anytime even if the section is not visible or not rendered
+      onToggle: ({ item }) => {
+        ztoolkit.log("Section toggled!", item?.id);
+      },
+    });
+  }
+
+  @example
+  static async registerReaderItemPaneSection(win: Window) {
+    const doc = win.document;
+    Zotero.ItemPaneManager.registerSection({
+      paneID: "reader-example",
+      pluginID: config.addonID,
+      header: {
+        l10nID: getLocaleID("item-section-example2-head-text"),
+        l10nArgs: `{"status": "Initialized"}`,
+        icon: `chrome://${config.addonRef}/content/icons/openai@0.4x.png`,
+      },
+      sidenav: {
+        l10nID: getLocaleID("item-section-example2-sidenav-tooltip"),
+        icon: `chrome://${config.addonRef}/content/icons/openai@0.5x.png`,
+      },
+      bodyXHTML: `<html:div style="display: flex; flex-direction: column; padding: 4px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 100%; box-sizing: border-box; height: 100%; font-size: 12px; color: var(--color-text-primary);">
+        <html:div style="display: flex; flex-direction: row; gap: 4px; margin-bottom: 8px; width: 100%;">
+          <html:button id="add_selection_btn" style="flex-grow: 1; padding: 4px 8px; background-color: var(--color-background-secondary); border: 1px solid var(--color-border); border-radius: 2px; cursor: pointer; font-size: 14px; color: var(--color-text-primary);">
+            <html:span>Add Selection</html:span>
+          </html:button>
+          <html:button id="add_fulltext_btn" style="flex-grow: 1; padding: 4px 8px; background-color: var(--color-background-secondary); border: 1px solid var(--color-border); border-radius: 2px; cursor: pointer; font-size: 14px; color: var(--color-text-primary);">
+            <html:span>Add Full Text</html:span>
+          </html:button>
+          <html:button id="clear_btn" style="flex-grow: 1; padding: 4px 8px; background-color: var(--color-background-secondary); border: 1px solid var(--color-border); border-radius: 2px; cursor: pointer; font-size: 14px; color: var(--color-text-primary);">
+            <html:span>Clear</html:span>
+          </html:button>
+        </html:div>
+        <html:textarea id="pdftext" style="width: 100%; box-sizing: border-box; min-height: 80px; padding: 6px; font-size: 12px; border: 1px solid var(--color-border); border-radius: 2px; margin-bottom: 8px; resize: vertical; font-family: inherit; background-color: var(--color-background-primary); color: var(--color-text-primary);" placeholder="PDF内容区（可插入全文或选中内容）"></html:textarea>
+        <html:textarea id="userquery" style="width: 100%; box-sizing: border-box; min-height: 48px; padding: 6px; font-size: 12px; border: 1px solid var(--color-border); border-radius: 2px; margin-bottom: 8px; resize: vertical; font-family: inherit; background-color: var(--color-background-primary); color: var(--color-text-primary);" placeholder="请输入你的问题..."></html:textarea>
+        <html:div style="display: flex; margin-bottom: 8px; width: 100%; gap: 4px;">
+          <html:button id="uquery_btn" style="flex-grow: 1; padding: 4px 8px; background-color: var(--color-background-secondary); border: 1px solid var(--color-border); border-radius: 2px; cursor: pointer; font-size: 14px; color: var(--color-text-primary);">
+            <html:span>Ask AI</html:span>
+          </html:button>
+          <html:button id="summarize_btn" style="flex-grow: 1; padding: 4px 8px; background-color: var(--color-background-secondary); border: 1px solid var(--color-border); border-radius: 2px; cursor: pointer; font-size: 14px; color: var(--color-text-primary);">
+            <html:span>Summarize</html:span>
+          </html:button>
+        </html:div>
+        <html:textarea id="result" style="width: 100%; box-sizing: border-box; flex-grow: 2; min-height: 200px; padding: 6px; font-size: 12px; border: 1px solid var(--color-border); border-radius: 2px; resize: vertical; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: var(--color-background-primary); color: var(--color-text-primary); word-wrap: break-word;" placeholder="AI response will appear here..."></html:textarea>
+      </html:div>`,
+      onInit: ({ item }) => {
+        ztoolkit.log("Section init!", item?.id);
+      },
+      onDestroy: (props) => {
+        ztoolkit.log("Section destroy!");
+      },
+      onItemChange: ({ item, setEnabled, tabType }) => {
+        ztoolkit.log(`Section item data changed to ${item?.id}`);
+        setEnabled(tabType === "reader");
+        return true;
+      },
+      onRender: ({
+        body,
+        item,
+        setL10nArgs,
+        setSectionSummary,
+        setSectionButtonStatus,
+      }) => {
+
+      },
+      onAsyncRender: async ({
+        body,
+        item,
+        setL10nArgs,
+        setSectionSummary,
+        setSectionButtonStatus,
+      }) => {
+        const pdftext = body.querySelector("#pdftext") as HTMLTextAreaElement;
+        const userquery = body.querySelector("#userquery") as HTMLTextAreaElement;
+        const result_p = body.querySelector("#result") as HTMLElement;
+        const uquery_btn = body.querySelector("#uquery_btn") as HTMLElement;
+        const summarize_btn = body.querySelector("#summarize_btn") as HTMLElement;
+        const clear_btn = body.querySelector("#clear_btn") as HTMLElement;
+        const add_selection_btn = body.querySelector("#add_selection_btn") as HTMLElement;
+        const add_fulltext_btn = body.querySelector("#add_fulltext_btn") as HTMLElement;
+
+        // Add hover effects to buttons
+        const buttons = body.querySelectorAll("button");
+        buttons.forEach(button => {
+          button.addEventListener("mouseover", () => {
+            if (window.document.documentElement.getAttribute('theme') === 'dark') {
+              button.style.backgroundColor = "var(--color-state-hover-dark)";
+            } else {
+              button.style.backgroundColor = "var(--color-state-hover)";
+            }
+          });
+          button.addEventListener("mouseout", () => {
+            button.style.backgroundColor = "var(--color-background-secondary)";
+          });
+        });
+
+        function clear_content() {
+          pdftext.value = '';
+          userquery.value = '';
+          result_p.textContent = 'Content cleared.';
+        }
+
+        let lastSelectedText = '';
+        let textSelectionListenerRegistered = false;
+
+        function registerTextSelectionListener() {
+          if (textSelectionListenerRegistered) {
+            return;
+          }
+
+          try {
+            Zotero.Reader.registerEventListener('renderTextSelectionPopup', (event: any) => {
+              if (event.params && event.params.annotation && event.params.annotation.text) {
+                lastSelectedText = event.params.annotation.text.trim();
+                ztoolkit.log("Selected text captured:", lastSelectedText);
+              }
+            });
+
+            textSelectionListenerRegistered = true;
+            ztoolkit.log("Text selection listener registered successfully");
+          } catch (err) {
+            ztoolkit.log("Error registering text selection listener:", err);
+          }
+        }
+
+        registerTextSelectionListener();
+
+        async function add_selection() {
+          try {
+            result_p.textContent = 'Getting selection...';
+
+            if (lastSelectedText) {
+              pdftext.value += lastSelectedText + '\n\n';
+              result_p.textContent = 'Selected text added successfully!';
+              return;
+            }
+
+            const currentTabID = Zotero.Reader.getTabIDFromElement(window.document.activeElement);
+            if (!currentTabID) {
+              result_p.textContent = 'No active PDF reader found. Please open a PDF and select some text.';
+              return;
+            }
+
+            const reader = Zotero.Reader.getByTabID(currentTabID);
+            if (!reader) {
+              result_p.textContent = 'Cannot access the current PDF reader.';
+              return;
+            }
+
+            try {
+              if (reader._iframe && reader._iframe.contentWindow) {
+                const win = reader._iframe.contentWindow;
+                const selection = win.getSelection();
+                if (selection && selection.toString().trim()) {
+                  const selectedText = selection.toString().trim();
+                  pdftext.value += selectedText + '\n\n';
+                  result_p.textContent = 'Selected text added successfully!';
+                  return;
+                }
+              }
+            } catch (e) {
+              ztoolkit.log("Failed to get selection:", e);
+            }
+
+            result_p.textContent = 'Could not retrieve selected text. Please select text in PDF first, then click "Add Selection" button.';
+          } catch (error) {
+            ztoolkit.log("Error in add_selection:", error);
+            result_p.textContent = 'Error getting selected text. Please try copying and pasting manually.';
+          }
+        }
+
+        async function add_fulltext() {
+          try {
+            result_p.textContent = 'Extracting full text from PDF...';
+
+            const attachments = await item.getAttachments();
+            let pdfText = null;
+
+            for (const attachmentID of attachments) {
+              const attachment = await Zotero.Items.getAsync(attachmentID);
+              if (attachment.attachmentContentType === 'application/pdf') {
+                pdfText = await attachment.attachmentText;
+                break;
+              }
+            }
+
+            if (pdfText) {
+              const cleanedText = cleanPdfText(pdfText);
+              pdftext.value += cleanedText + '\n\n';
+              result_p.textContent = 'Full text added successfully.';
+            } else {
+              result_p.textContent = 'Could not extract text from PDF. The PDF may not be text-based or may be encrypted.';
+            }
+          } catch (error) {
+            ztoolkit.log("Error getting full text:", error);
+            result_p.textContent = 'Error: Could not extract text from PDF. Please check if the PDF is accessible.';
+          }
+        }
+
+        clear_btn.addEventListener('click', clear_content);
+        add_selection_btn.addEventListener('click', add_selection);
+        add_fulltext_btn.addEventListener('click', add_fulltext);
+
+        async function ask_question() {
+          const btnSpan = uquery_btn.querySelector("span");
+          if (btnSpan) {
+            btnSpan.textContent = "Processing...";
+          }
+          uquery_btn.style.backgroundColor = "var(--color-state-active)";
+
+          const OPENAI_API_KEY = getPref('input') as string;
+          const apiUrl = getPref('base') as string;
+          const model = getPref('model') as string;
+
+          var user_qtxt = pdftext.value + '\n' + userquery.value;
+
+          var system_prompt = '请你扮演一位学术助手，根据提供的论文内容，使用中文回答我的问题。请确保表达清晰准确，不使用Markdown格式，保持纯文本输出。';
+
+          if (!OPENAI_API_KEY || !apiUrl) {
+            result_p.textContent = 'API key or base URL is not set. Please configure them in the settings.';
+            if (btnSpan) {
+              btnSpan.textContent = "Ask AI";
+            }
+            uquery_btn.style.backgroundColor = "var(--color-background-secondary)";
+            return;
+          }
+
+          var requestData = {
+            model: `${model}`,
+            messages: [{ role: 'system', content: `${system_prompt}` }, { role: 'user', content: `${user_qtxt}` }],
+            stream: true,
+          };
+
+          try {
+            var response = await fetch(`${apiUrl}/v1/chat/completions`, {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${OPENAI_API_KEY}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(requestData),
+            });
+
+            if (!response.ok) {
+              throw new Error(`Error: ${response.status} ${response.statusText}`);
+            } else {
+              result_p.textContent = '';
+
+              const reader = response.body?.getReader();
+              const decoder = new TextDecoder();
+              let done = false;
+
+              while (!done) {
+                const { done: streamDone, value } = await reader!.read();
+                done = streamDone;
+                if (value) {
+                  const chunk = decoder.decode(value, { stream: true });
+                  const lines = chunk.split('\n').filter(line => line.trim() !== '');
+
+                  for (var line of lines) {
+                    try {
+                      line = line.replace('data:', '')
+                      const data = JSON.parse(line);
+                      if (data.choices && data.choices[0]) {
+                        const text = data.choices[0].delta?.content || '';
+                        result_p.textContent += text;
+                      }
+                    } catch (error) {
+                      ztoolkit.log("Could not parse JSON:", line);
+                    }
+                  }
+                }
+              }
+            }
+          } catch (error) {
+            ztoolkit.log("Error", error);
+            result_p.textContent = `Error: ${error instanceof Error ? error.message : 'Unknown error'}`;
+          } finally {
+            if (btnSpan) {
+              btnSpan.textContent = "Ask AI";
+            }
+            uquery_btn.style.backgroundColor = "var(--color-background-secondary)";
+          }
+        }
+
+        async function summarize_text() {
+          const btnSpan = summarize_btn.querySelector("span");
+          if (btnSpan) {
+            btnSpan.textContent = "Processing...";
+          }
+          summarize_btn.style.backgroundColor = "var(--color-state-active)";
+
+          const OPENAI_API_KEY = getPref('input') as string;
+          const apiUrl = getPref('base') as string;
+          const model = getPref('model') as string;
+
+          var user_qtxt = pdftext.value + '\n' + userquery.value;
+
+          var system_prompt = '请你扮演一位学术助手，阅读以下论文内容，并用简洁、清晰的中文总结其核心要点，适合快速理解重点。请仅保留关键信息，避免冗长解释。同时不使用Markdown格式，保持纯文本输出。';
+
+          if (!OPENAI_API_KEY || !apiUrl) {
+            result_p.textContent = 'API key or base URL is not set. Please configure them in the settings.';
+            if (btnSpan) {
+              btnSpan.textContent = "Summarize";
+            }
+            summarize_btn.style.backgroundColor = "var(--color-background-secondary)";
+            return;
+          }
+
+          if (!user_qtxt.trim()) {
+            result_p.textContent = 'Please enter some text to summarize.';
+            if (btnSpan) {
+              btnSpan.textContent = "Summarize";
+            }
+            summarize_btn.style.backgroundColor = "var(--color-background-secondary)";
+            return;
+          }
+
+          var requestData = {
+            model: model || 'gpt-3.5-turbo',
+            messages: [
+              { role: 'system', content: system_prompt },
+              { role: 'user', content: user_qtxt }
+            ],
+            stream: true,
+          };
+
+          try {
+            var response = await fetch(`${apiUrl}/v1/chat/completions`, {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${OPENAI_API_KEY}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(requestData),
+            });
+
+            if (!response.ok) {
+              throw new Error(`Error: ${response.status} ${response.statusText}`);
+            } else {
+              result_p.textContent = '';
+
+              const reader = response.body?.getReader();
+              const decoder = new TextDecoder();
+              let done = false;
+
+              while (!done) {
+                const { done: streamDone, value } = await reader!.read();
+                done = streamDone;
+                if (value) {
+                  const chunk = decoder.decode(value, { stream: true });
+                  const lines = chunk.split('\n').filter(line => line.trim() !== '');
+
+                  for (var line of lines) {
+                    try {
+                      line = line.replace('data:', '')
+                      const data = JSON.parse(line);
+                      if (data.choices && data.choices[0]) {
+                        const text = data.choices[0].delta?.content || '';
+                        result_p.textContent += text;
+                      }
+                    } catch (error) {
+                      ztoolkit.log("Could not parse JSON:", line);
+                    }
+                  }
+                }
+              }
+            }
+          } catch (error) {
+            ztoolkit.log("Error", error);
+            result_p.textContent = `Error: ${error instanceof Error ? error.message : 'Unknown error'}`;
+          } finally {
+            if (btnSpan) {
+              btnSpan.textContent = "Summarize";
+            }
+            summarize_btn.style.backgroundColor = "var(--color-background-secondary)";
+          }
+        }
+
+        uquery_btn.addEventListener('click', ask_question);
+        summarize_btn.addEventListener('click', summarize_text);
+      },
       onToggle: ({ item }) => {
         ztoolkit.log("Section toggled!", item?.id);
       },
     });
   }
 }
-
-
 
 export class HelperExampleFactory {
   @example
