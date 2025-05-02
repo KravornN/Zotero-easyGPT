@@ -1,15 +1,34 @@
 # Zotero-easyGPT
 
-[![Using Zotero Plugin Template](https://img.shields.io/badge/Using-Zotero%20Plugin%20Template-blue?style=flat-square&logo=github)](https://github.com/windingwind/zotero-plugin-template)
-[![GitHub Downloads](https://img.shields.io/github/downloads/KravornN/Zotero-easyGPT/total?label=Downloads&style=flat-square)](https://github.com/KravornN/Zotero-easyGPT)
-
+<div align="center">
+  <img src="logo.png" width="77%" />
+</div>
 
 A Zotero plugin that integrates GPT functionalities into the PDF reader sidebar. Ask questions about or summarize PDF content directly within Zotero. 
 
-It supports any API compatible with the OpenAI specification.
+[![Using Zotero Plugin Template](https://img.shields.io/badge/Using-Zotero%20Plugin%20Template-blue?style=flat-square&logo=github)](https://github.com/windingwind/zotero-plugin-template)
+[![License](https://img.shields.io/github/license/KravornN/Zotero-easyGPT?style=flat-square)](https://github.com/KravornN/Zotero-easyGPT/blob/main/LICENSE)
+[![Latest release](https://img.shields.io/github/v/release/KravornN/Zotero-easyGPT?style=flat-square&color=blue)](https://github.com/KravornN/Zotero-easyGPT/releases)
+[![GitHub Downloads](https://img.shields.io/github/downloads/KravornN/Zotero-easyGPT/total?label=Downloads&style=flat-square)](https://github.com/KravornN/Zotero-easyGPT/releases)
+
+
+## Main Features
+
+- [x] 📄 **PDF Sidebar Integration**: Seamlessly appears in the Zotero PDF reader sidebar for quick access.
+- [x] 🔍 **Text Selection & Full Text Support**: Insert selected text or the entire PDF content into the AI query area with one click.
+- [x] 💬 **Ask AI Anything**: Directly ask GPT questions about the PDF content and get instant answers in your chosen language (Chinese or English).
+- [x] 📝 **One-Click Summarization**: Summarize the PDF content with a single click, supporting both Chinese and English output.
+- [x] 🌐 **Language Switch**: Easily switch between Chinese and English for prompts and AI responses via the plugin settings.
+- [x] 🔌 **OpenAI-Compatible**: Works with any API compatible with the OpenAI specification (OpenAI, Azure, 硅基流动等)。
+- [x] 🎨 **User-Friendly UI**: Clean, intuitive interface with copyable, read-only AI output.
+- [x] ⚙️ **Customizable Model & Endpoint**: Configure API base URL, model, and key to fit your needs.
 
 
 ## Usage
+- Get `.xpi` file: [download latest](https://github.com/KravornN/Zotero-easyGPT/releases/latest/download/zotero-easy-gpt.xpi) release `.xpi` file
+- Install `.xpi` file in Zotero
+- Open Zotero-easyGPT setting
+
 ### 国内用户
 可以使用硅基流动，例如：
 
