@@ -30,3 +30,24 @@
   </html:div>
   
 </groupbox>
+<script type="application/javascript">
+(function() {
+  // 获取Zotero插件前缀
+  const prefsPrefix = "extensions.zotero.zoteroeasygpt";
+  // 获取Zotero.Prefs对象
+  const Zotero = window.opener?.Zotero || window.Zotero;
+  if (!Zotero) return;
+  // 获取当前语言设置
+  const lang = Zotero.Prefs.get(prefsPrefix + ".lang", true) || "zh-CN";
+  // 设置radio选中
+  const radios = document.querySelectorAll('input[name="__addonRef__-lang-radio"]');
+  radios.forEach(radio => {
+    radio.checked = radio.value === lang;
+    radio.addEventListener('change', function() {
+      if (this.checked) {
+        Zotero.Prefs.set(prefsPrefix + ".lang", this.value, true);
+      }
+    });
+  });
+})();
+</script>
