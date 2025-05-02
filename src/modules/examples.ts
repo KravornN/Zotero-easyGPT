@@ -250,6 +250,7 @@ export class UIExampleFactory {
         setSectionSummary,
         setSectionButtonStatus,
       }) => {
+        const lang = getPref('lang') as string || 'zh-CN';
         const pdftext = body.querySelector("#pdftext") as HTMLTextAreaElement;
         const userquery = body.querySelector("#userquery") as HTMLTextAreaElement;
         const result_p = body.querySelector("#result") as HTMLTextAreaElement;
@@ -398,7 +399,12 @@ export class UIExampleFactory {
 
           var user_qtxt = pdftext.value + '\n' + userquery.value;
 
-          var system_prompt = '请你扮演一位学术助手，根据提供的论文内容，使用中文回答我的问题。请确保表达清晰准确，不使用Markdown格式，保持纯文本输出。';
+          let system_prompt = '';
+          if (lang === 'en-US') {
+            system_prompt = 'You are an academic assistant. Please answer my question in clear and accurate English based on the provided paper content. Do not use Markdown format, keep the output as plain text.';
+          } else {
+            system_prompt = '请你扮演一位学术助手，根据提供的论文内容，使用中文回答我的问题。请确保表达清晰准确，不使用Markdown格式，保持纯文本输出。';
+          }
 
           if (!OPENAI_API_KEY || !apiUrl) {
             result_p.textContent = 'API key or base URL is not set. Please configure them in the settings.';
@@ -481,7 +487,12 @@ export class UIExampleFactory {
 
           var user_qtxt = pdftext.value + '\n' + userquery.value;
 
-          var system_prompt = '请你扮演一位学术助手，阅读以下论文内容，并用简洁、清晰的中文总结其核心要点，适合快速理解重点。请仅保留关键信息，避免冗长解释。同时不使用Markdown格式，保持纯文本输出。';
+          let system_prompt = '';
+          if (lang === 'en-US') {
+            system_prompt = 'You are an academic assistant. Please read the following paper content and summarize the key points in concise and clear English for quick understanding. Only keep the essential information, avoid lengthy explanations. Do not use Markdown format, keep the output as plain text.';
+          } else {
+            system_prompt = '请你扮演一位学术助手，阅读以下论文内容，并用简洁、清晰的中文总结其核心要点，适合快速理解重点。请仅保留关键信息，避免冗长解释。同时不使用Markdown格式，保持纯文本输出。';
+          }
 
           if (!OPENAI_API_KEY || !apiUrl) {
             result_p.textContent = 'API key or base URL is not set. Please configure them in the settings.';
@@ -637,6 +648,7 @@ export class UIExampleFactory {
         setSectionSummary,
         setSectionButtonStatus,
       }) => {
+        const lang = getPref('lang') as string || 'zh-CN';
         const pdftext = body.querySelector("#pdftext") as HTMLTextAreaElement;
         const userquery = body.querySelector("#userquery") as HTMLTextAreaElement;
         const result_p = body.querySelector("#result") as HTMLTextAreaElement;
@@ -785,7 +797,12 @@ export class UIExampleFactory {
 
           var user_qtxt = pdftext.value + '\n' + userquery.value;
 
-          var system_prompt = '请你扮演一位学术助手，根据提供的论文内容，使用中文回答我的问题。请确保表达清晰准确，不使用Markdown格式，保持纯文本输出。';
+          let system_prompt = '';
+          if (lang === 'en-US') {
+            system_prompt = 'You are an academic assistant. Please answer my question in clear and accurate English based on the provided paper content. Do not use Markdown format, keep the output as plain text.';
+          } else {
+            system_prompt = '请你扮演一位学术助手，根据提供的论文内容，使用中文回答我的问题。请确保表达清晰准确，不使用Markdown格式，保持纯文本输出。';
+          }
 
           if (!OPENAI_API_KEY || !apiUrl) {
             result_p.textContent = 'API key or base URL is not set. Please configure them in the settings.';
@@ -868,7 +885,12 @@ export class UIExampleFactory {
 
           var user_qtxt = pdftext.value + '\n' + userquery.value;
 
-          var system_prompt = '请你扮演一位学术助手，阅读以下论文内容，并用简洁、清晰的中文总结其核心要点，适合快速理解重点。请仅保留关键信息，避免冗长解释。同时不使用Markdown格式，保持纯文本输出。';
+          let system_prompt = '';
+          if (lang === 'en-US') {
+            system_prompt = 'You are an academic assistant. Please read the following paper content and summarize the key points in concise and clear English for quick understanding. Only keep the essential information, avoid lengthy explanations. Do not use Markdown format, keep the output as plain text.';
+          } else {
+            system_prompt = '请你扮演一位学术助手，阅读以下论文内容，并用简洁、清晰的中文总结其核心要点，适合快速理解重点。请仅保留关键信息，避免冗长解释。同时不使用Markdown格式，保持纯文本输出。';
+          }
 
           if (!OPENAI_API_KEY || !apiUrl) {
             result_p.textContent = 'API key or base URL is not set. Please configure them in the settings.';
