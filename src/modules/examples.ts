@@ -593,8 +593,8 @@ export class UIExampleFactory {
             <html:span>Clear</html:span>
           </html:button>
         </html:div>
-        <html:textarea id="pdftext" style="width: 100%; box-sizing: border-box; min-height: 80px; padding: 6px; font-size: 12px; border: 1px solid var(--color-border); border-radius: 2px; margin-bottom: 8px; resize: vertical; font-family: inherit; background-color: var(--color-background-primary); color: var(--color-text-primary);" placeholder="PDF内容区（可插入全文或选中内容）"></html:textarea>
-        <html:textarea id="userquery" style="width: 100%; box-sizing: border-box; min-height: 48px; padding: 6px; font-size: 12px; border: 1px solid var(--color-border); border-radius: 2px; margin-bottom: 8px; resize: vertical; font-family: inherit; background-color: var(--color-background-primary); color: var(--color-text-primary);" placeholder="请输入你的问题..."></html:textarea>
+        <html:textarea id="pdftext" style="width: 100%; box-sizing: border-box; min-height: 80px; padding: 6px; font-size: 12px; border: 1px solid var(--color-border); border-radius: 2px; margin-bottom: 8px; resize: vertical; font-family: inherit; background-color: var(--color-background-primary); color: var(--color-text-primary);" placeholder="PDF Content Area (Insert full or selected text)"></html:textarea>
+        <html:textarea id="userquery" style="width: 100%; box-sizing: border-box; min-height: 48px; padding: 6px; font-size: 12px; border: 1px solid var(--color-border); border-radius: 2px; margin-bottom: 8px; resize: vertical; font-family: inherit; background-color: var(--color-background-primary); color: var(--color-text-primary);" placeholder="Please enter your question..."></html:textarea>
         <html:div style="display: flex; margin-bottom: 8px; width: 100%; gap: 4px;">
           <html:button id="uquery_btn" style="flex-grow: 1; padding: 4px 8px; background-color: var(--color-background-secondary); border: 1px solid var(--color-border); border-radius: 2px; cursor: pointer; font-size: 14px; color: var(--color-text-primary);">
             <html:span>Ask AI</html:span>
