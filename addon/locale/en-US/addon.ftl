@@ -9,3 +9,5 @@ prefs-table-title = Title
 prefs-table-detail = Detail
 tabpanel-lib-tab-label = Lib Tab
 tabpanel-reader-tab-label = Reader Tab
+associate-button-tooltip = Explore
+retrieved-pubmed-article-prefix = Related PubMed Article:
