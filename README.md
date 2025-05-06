@@ -29,7 +29,7 @@ A Zotero plugin that integrates GPT functionalities into the PDF reader sidebar.
 - Install `.xpi` file in Zotero
 - Open Zotero-easyGPT setting
 
-### 国内用户
+### 中国用户
 可以使用硅基流动，例如：
 
 * **Base URL:** 填入 `https://api.siliconflow.cn`
