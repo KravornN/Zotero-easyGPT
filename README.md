@@ -14,12 +14,12 @@ A Zotero plugin that integrates GPT functionalities into the PDF reader sidebar.
 
 ## Main Features
 
-- [x] 🌐 **PubMed Search**: Search PubMed via Google PSE for related articles.
+- [x] 🌐 **Explore**: Generate keywords based on paper abstracts, then search PubMed via Google Programmable Search Engine for related articles to expand upon the latest information.
 - [x] 📄 **PDF Sidebar Integration**: Seamlessly appears in the Zotero PDF reader sidebar for quick access.
 - [x] 🔍 **Text Selection & Full Text Support**: Insert selected text or the entire PDF content into the AI query area with one click.
 - [x] 💬 **Ask AI Anything**: Directly ask GPT questions about the PDF content and get instant answers.
 - [x] 📝 **One-Click Summarization**: Summarize the PDF content with a single click.
-- [x] 🌐 **Language Switch**: Easily switch between Chinese and English for prompts and AI responses via the plugin settings.
+- [x] 📌 **Language Switch**: Easily switch between Chinese and English for prompts and AI responses via the plugin settings.
 - [x] 🔌 **OpenAI-Compatible**: Works with any API compatible with the OpenAI specification.
 - [x] 🎨 **User-Friendly UI**: Clean, intuitive interface with copyable AI output.
 - [x] ⚙️ **Customizable Model & Endpoint**: Configure API base URL, model, and key to fit your needs.
@@ -29,6 +29,8 @@ A Zotero plugin that integrates GPT functionalities into the PDF reader sidebar.
 - Get `.xpi` file: [download latest](https://github.com/KravornN/Zotero-easyGPT/releases/latest/download/zotero-easy-gpt.xpi) release `.xpi` file
 - Install `.xpi` file in Zotero
 - Open Zotero-easyGPT setting
+- Enter the Google [PSE](https://programmablesearchengine.google.com/about/) ID and key. Note: restrict the searchable sites to`pubmed.ncbi.nlm.nih.gov/*`
+- (Optional) Enter the [jina.ai](https://jina.ai/api-dashboard) key
 
 ### 中国用户
 可以使用硅基流动，例如：
