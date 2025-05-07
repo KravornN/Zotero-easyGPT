@@ -29,7 +29,7 @@ A Zotero plugin that integrates GPT functionalities into the PDF reader sidebar.
 - Get `.xpi` file: [download latest](https://github.com/KravornN/Zotero-easyGPT/releases/latest/download/zotero-easy-gpt.xpi) release `.xpi` file
 - Install `.xpi` file in Zotero
 - Open Zotero-easyGPT setting
-- Enter the Google [PSE](https://programmablesearchengine.google.com/about/) ID and key. Note: restrict the searchable sites to`pubmed.ncbi.nlm.nih.gov/*`
+- (Optional) Enter the Google [PSE](https://programmablesearchengine.google.com/about/) ID and key. Note: restrict the searchable sites to`pubmed.ncbi.nlm.nih.gov/*`
 - (Optional) Enter the [jina.ai](https://jina.ai/api-dashboard) key
 
 ### 中国用户
