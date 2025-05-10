@@ -278,7 +278,7 @@ export class UIExampleFactory {
             associate_btn.setAttribute('title', getString('associate-button-tooltip'));
         }
         if (multiturn_btn) {
-            multiturn_btn.setAttribute('title', '多轮对话');
+            multiturn_btn.setAttribute('title', getString('multiturn-button-tooltip'));
         }
 
         let associateActive = false;

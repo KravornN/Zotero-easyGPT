@@ -10,4 +10,5 @@ prefs-table-detail = 详情
 tabpanel-lib-tab-label = 库标签
 tabpanel-reader-tab-label = 阅读器标签
 associate-button-tooltip = 联想
+multiturn-button-tooltip = 多轮对话
 retrieved-pubmed-article-prefix = 相关PubMed文章：
