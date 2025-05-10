@@ -14,7 +14,8 @@ A Zotero plugin that integrates GPT functionalities into the PDF reader sidebar.
 
 ## Main Features
 
-- [x] 🌐 **Explore**: Generate keywords based on paper abstracts, then search PubMed via Google Programmable Search Engine for related articles to expand upon the latest information.
+- [x] 🔁 **Multi-turn Conversation**: Supports continuous dialogue with context memory.
+- [x] 🌐 **Smart Exploration**: Generate keywords from paper abstracts and search PubMed via Google Programmable Search Engine to discover related research and up-to-date information.
 - [x] 📄 **PDF Sidebar Integration**: Seamlessly appears in the Zotero PDF reader sidebar for quick access.
 - [x] 🔍 **Text Selection & Full Text Support**: Insert selected text or the entire PDF content into the AI query area with one click.
 - [x] 💬 **Ask AI Anything**: Directly ask GPT questions about the PDF content and get instant answers.
