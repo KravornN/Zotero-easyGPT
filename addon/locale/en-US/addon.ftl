@@ -10,5 +10,5 @@ prefs-table-detail = Detail
 tabpanel-lib-tab-label = Lib Tab
 tabpanel-reader-tab-label = Reader Tab
 associate-button-tooltip = Explore
-multiturn-button-tooltip = multi-turn conversation
+multiturn-button-tooltip = Multi-turn Conversation
 retrieved-pubmed-article-prefix = Related PubMed Article:

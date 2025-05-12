@@ -506,11 +506,15 @@ export class UIExampleFactory {
             ztoolkit.log('[getKeywordsFromAbstract] OpenAI API key or base URL not set.');
             return [];
           }
+          if (!model || model.trim() === '') {
+            ztoolkit.log('[getKeywordsFromAbstract] Model not set.');
+            return [];
+          }
 
           const system_prompt = `You are an academic research assistant. Based on the provided abstract, please generate 3 to 5 generalized English keywords that would be effective for a literature search to find related papers. The keywords should capture the main topics and concepts but be broad enough to discover a range of relevant studies. Please output *only* the keywords, separated by commas, without any other text or numbering.`;
 
           const requestData = {
-            model: model || 'gpt-3.5-turbo',
+            model: model,
             messages: [
               { role: 'system', content: system_prompt },
               { role: 'user', content: abstract }
@@ -668,6 +672,22 @@ export class UIExampleFactory {
             uquery_btn.style.backgroundColor = "var(--color-background-secondary)";
             return;
           }
+          if (!model || model.trim() === '') {
+            result_p.textContent = 'Model is not set. Please enter the model name in settings.';
+            if (btnSpan) {
+              btnSpan.textContent = "Ask AI";
+            }
+            uquery_btn.style.backgroundColor = "var(--color-background-secondary)";
+            return;
+          }
+          if (!pdftext.value.trim()) {
+            result_p.textContent = 'PDF content cannot be empty. Please insert or enter PDF content first.';
+            if (btnSpan) {
+              btnSpan.textContent = "Ask AI";
+            }
+            uquery_btn.style.backgroundColor = "var(--color-background-secondary)";
+            return;
+          }
 
           let messages;
           if (multiTurnActive) {
@@ -687,7 +707,7 @@ export class UIExampleFactory {
           }
 
           var requestData = {
-            model: `${model}`,
+            model: model,
             messages: messages,
             stream: true,
           };
@@ -809,7 +829,14 @@ export class UIExampleFactory {
             summarize_btn.style.backgroundColor = "var(--color-background-secondary)";
             return;
           }
-
+          if (!model || model.trim() === '') {
+            result_p.textContent = 'Model is not set. Please enter the model name in settings.';
+            if (btnSpan) {
+              btnSpan.textContent = "Summarize";
+            }
+            summarize_btn.style.backgroundColor = "var(--color-background-secondary)";
+            return;
+          }
           if (!user_qtxt.trim()) {
             result_p.textContent = 'Please enter some text to summarize.';
             if (btnSpan) {
@@ -835,7 +862,7 @@ export class UIExampleFactory {
           }
 
           var requestData = {
-            model: model || 'gpt-3.5-turbo',
+            model: model,
             messages: messages,
             stream: true,
           };
@@ -957,20 +984,21 @@ export class HelperExampleFactory {
           attributes: {
             type: "button",
           },
-          listeners: [
-            {
-              type: "click",
-              listener: (e: Event) => {
-                new ztoolkit.Clipboard()
-                  .addText(
-                    `${pTitle}`,
-                    "text/unicode",
-                  )
-                  .copy();
-                ztoolkit.getGlobal("alert")("Copied!");
+          listeners:
+            [
+              {
+                type: "click",
+                listener: (e: Event) => {
+                  new ztoolkit.Clipboard()
+                    .addText(
+                      `${pTitle}`,
+                      "text/unicode",
+                    )
+                    .copy();
+                  ztoolkit.getGlobal("alert")("Copied!");
+                },
               },
-            },
-          ],
+            ],
           children: [
             {
               tag: "div",
