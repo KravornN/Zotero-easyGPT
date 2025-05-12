@@ -3,6 +3,12 @@ import { getLocaleID, getString } from "../utils/locale";
 import { getPref } from "../utils/prefs";
 import { cleanPdfText } from "../utils/cleanPdfText";
 
+// 创建全局映射来存储每个PDF文档的数据
+// 这样可以确保不同文档间的数据不会混淆
+const documentCaches = new Map<string, Map<string, {content: string, timestamp: number}>>();
+const documentResponses = new Map<string, string>();
+const documentHistories = new Map<string, any[]>();
+
 function example(
   target: any,
   propertyKey: string | symbol,
@@ -276,14 +282,31 @@ export class UIExampleFactory {
 
         if (associate_btn) {
             associate_btn.setAttribute('title', getString('associate-button-tooltip'));
-        }
-        if (multiturn_btn) {
+        }        if (multiturn_btn) {
             multiturn_btn.setAttribute('title', getString('multiturn-button-tooltip'));
         }
-
+        
+        // 获取当前文献ID作为唯一标识
+        const itemId = String(item?.id || "unknown");
+        
+        // 为当前文献创建或获取缓存
+        if (!documentCaches.has(itemId)) {
+            documentCaches.set(itemId, new Map<string, {content: string, timestamp: number}>());
+        }
+        let associativeSearchCache = documentCaches.get(itemId)!;
+        
+        // 为当前文献创建或获取对话历史
+        if (!documentHistories.has(itemId)) {
+            documentHistories.set(itemId, []);
+        }
+        let multiTurnHistory = documentHistories.get(itemId)!;
+        
+        // 获取当前响应（如果有）
+        let currentResponse = documentResponses.get(itemId) || '';
+        
         let associateActive = false;
         let multiTurnActive = false;
-        let multiTurnHistory: any[] = [];
+        
         if (associate_btn) {
           associate_btn.addEventListener("click", () => {
             associateActive = !associateActive;
@@ -298,15 +321,33 @@ export class UIExampleFactory {
         }
         if (multiturn_btn) {
           multiturn_btn.addEventListener("click", () => {
-            multiTurnActive = !multiTurnActive;
-            if (multiTurnActive) {
+            multiTurnActive = !multiTurnActive;            if (multiTurnActive) {
               multiturn_btn.style.backgroundColor = "#1976d2";
               multiturn_btn.style.borderColor = "#1976d2";
-              multiTurnHistory = [];
+              
+              // If there's a current response and history is empty, add the current QA to history
+              if (currentResponse && multiTurnHistory.length === 0) {
+                const systemPromptLang = (getPref('lang') as string || 'zh-CN') === 'en-US' 
+                  ? 'You are an academic assistant. Please answer my question in clear and accurate English based on the provided paper content. Do not use Markdown format, keep the output as plain text.'
+                  : '请你扮演一位学术助手，根据提供的论文内容，使用中文回答我的问题。请确保表达清晰准确，不使用Markdown格式，保持纯文本输出。';
+                
+                multiTurnHistory.push({ role: 'system', content: systemPromptLang });
+                
+                // Add the most recent query and response to history
+                if (pdftext.value && userquery.value) {
+                  multiTurnHistory.push({ role: 'user', content: pdftext.value + '\n' + userquery.value });
+                  multiTurnHistory.push({ role: 'assistant', content: currentResponse });
+                }
+              }
+              
+              // 将当前对话历史保存到文档特定的映射中
+              documentHistories.set(itemId, multiTurnHistory);
             } else {
               multiturn_btn.style.backgroundColor = "var(--color-background-secondary)";
               multiturn_btn.style.borderColor = "var(--color-border)";
               multiTurnHistory = [];
+              // 清空当前文档的历史记录
+              documentHistories.set(itemId, []);
             }
           });
         }
@@ -554,13 +595,24 @@ export class UIExampleFactory {
             ztoolkit.log(`[getKeywordsFromAbstract] Error calling OpenAI for keywords: ${error.message}`);
             return [];
           }
-        }
-
-        // 替换fetchAssociativeContent为新版，抓取PSE结果并用r.jina.ai获取内容
+        }        // 替换fetchAssociativeContent为新版，抓取PSE结果并用r.jina.ai获取内容，加入缓存机制
         async function fetchAssociativeContent(abstract: string): Promise<{content?: string, error?: string}> {
           const pse_id = getPref('pse_id');
           const pse_key = getPref('pse_key');
           if (!pse_id || !pse_key) return { error: 'PSE id/key not set.' };
+          
+          // Generate a cache key from the abstract
+          const cacheKey = abstract.trim().substring(0, 200); // Use first 200 chars as key
+          
+          // Check if we have a valid cache entry (less than 24 hours old)
+          const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+          const now = Date.now();
+          const cachedResult = associativeSearchCache.get(cacheKey);
+          
+          if (cachedResult && (now - cachedResult.timestamp < CACHE_TTL)) {
+            ztoolkit.log('[fetchAssociativeContent] Using cached result for this abstract');
+            return { content: cachedResult.content };
+          }
           
           ztoolkit.log('[fetchAssociativeContent] Starting with abstract...');
           let keywords = await getKeywordsFromAbstract(abstract);
@@ -610,7 +662,15 @@ export class UIExampleFactory {
             if (contents.length === 0 && pseResults.length > 0) {
               return { error: 'PSE returned results, but Jina failed to process any links.' };
             }
-            return { content: contents.join('\\n\\n') };
+            
+            // Store the result in the cache with current timestamp
+            const contentResult = contents.join('\\n\\n');
+            associativeSearchCache.set(cacheKey, {
+              content: contentResult,
+              timestamp: now
+            });
+            
+            return { content: contentResult };
           } catch (e: any) {
             ztoolkit.log(`[fetchAssociativeContent] Outer error in PSE/Jina processing: ${e.message}`);
             return { error: `PSE or r.jina.ai error: ${e.message}` };
@@ -687,15 +747,33 @@ export class UIExampleFactory {
             }
             uquery_btn.style.backgroundColor = "var(--color-background-secondary)";
             return;
-          }
-
-          let messages;
-          if (multiTurnActive) {
+          }          let messages;          if (multiTurnActive) {
             // 多轮对话，追加历史
             if (multiTurnHistory.length === 0) {
+              // 第一次对话，添加系统提示和完整内容
               multiTurnHistory.push({ role: 'system', content: system_prompt });
+              multiTurnHistory.push({ role: 'user', content: user_qtxt });
+            } else {
+              // 检查PDF内容是否发生变化
+              // 查找历史中最后一次包含PDF内容的消息
+              let pdfContentChanged = true;
+              const lastPdfContent = multiTurnHistory.find(msg => 
+                msg.role === 'user' && msg.content.includes(pdftext.value.trim())
+              );
+              
+              if (lastPdfContent) {
+                // 如果找到匹配，说明PDF内容没有变化
+                pdfContentChanged = false;
+              }
+              
+              if (pdfContentChanged && pdftext.value.trim()) {
+                // PDF内容发生变化，需要发送完整内容
+                multiTurnHistory.push({ role: 'user', content: user_qtxt });
+              } else {
+                // PDF内容未变，只发送问题
+                multiTurnHistory.push({ role: 'user', content: userquery.value });
+              }
             }
-            multiTurnHistory.push({ role: 'user', content: user_qtxt });
             messages = [...multiTurnHistory];
           } else {
             // 单轮对话
@@ -742,8 +820,7 @@ export class UIExampleFactory {
                   for (var line of lines) {
                     try {
                       line = line.replace('data:', '')
-                      const data = JSON.parse(line);
-                      if (data.choices && data.choices[0]) {
+                      const data = JSON.parse(line);                      if (data.choices && data.choices[0]) {
                         const text = data.choices[0].delta?.content || '';
                         answer += text;
                         result_p.textContent = answer;
@@ -754,9 +831,15 @@ export class UIExampleFactory {
                   }
                 }
               }
+                // 存储当前响应到文档特定的映射中
+              currentResponse = answer;
+              documentResponses.set(itemId, answer);
+              
               if (multiTurnActive) {
-                // 只保留本轮AI回答在UI，历史在multiTurnHistory
+                // 只保留本轮AI回答在UI，历史在文档特定的历史中
                 multiTurnHistory.push({ role: 'assistant', content: answer });
+                // 更新文档历史映射
+                documentHistories.set(itemId, multiTurnHistory);
               }
             }
           } catch (error) {
@@ -844,14 +927,31 @@ export class UIExampleFactory {
             }
             summarize_btn.style.backgroundColor = "var(--color-background-secondary)";
             return;
-          }
-
-          let messages;
-          if (multiTurnActive) {
+          }          let messages;          if (multiTurnActive) {
             if (multiTurnHistory.length === 0) {
+              // 第一次对话，添加系统提示和完整内容
               multiTurnHistory.push({ role: 'system', content: system_prompt });
+              multiTurnHistory.push({ role: 'user', content: user_qtxt });
+            } else {
+              // 检查PDF内容是否发生变化
+              let pdfContentChanged = true;
+              const lastPdfContent = multiTurnHistory.find(msg => 
+                msg.role === 'user' && msg.content.includes(pdftext.value.trim())
+              );
+              
+              if (lastPdfContent) {
+                // 如果找到匹配，说明PDF内容没有变化
+                pdfContentChanged = false;
+              }
+              
+              if (pdfContentChanged && pdftext.value.trim()) {
+                // PDF内容发生变化，需要发送完整内容并请求总结
+                multiTurnHistory.push({ role: 'user', content: user_qtxt + '\n请对上述内容进行概括总结。' });
+              } else {
+                // PDF内容未变，只发送概括请求
+                multiTurnHistory.push({ role: 'user', content: '请根据先前讨论的文章内容进行概括总结。' });
+              }
             }
-            multiTurnHistory.push({ role: 'user', content: user_qtxt });
             messages = [...multiTurnHistory];
           } else {
             messages = [
@@ -896,16 +996,27 @@ export class UIExampleFactory {
                   for (var line of lines) {
                     try {
                       line = line.replace('data:', '')
-                      const data = JSON.parse(line);
-                      if (data.choices && data.choices[0]) {
+                      const data = JSON.parse(line);                      if (data.choices && data.choices[0]) {
                         const text = data.choices[0].delta?.content || '';
                         result_p.textContent += text;
+                        // Accumulate the response for tracking
+                        if (!currentResponse) currentResponse = '';
+                        currentResponse += text;
                       }
                     } catch (error) {
                       ztoolkit.log("Could not parse JSON:", line);
                     }
                   }
                 }
+              }
+                // 存储当前响应到文档特定的映射中
+              documentResponses.set(itemId, currentResponse);
+              
+              // If in multi-turn mode, add this summary to history
+              if (multiTurnActive) {
+                multiTurnHistory.push({ role: 'assistant', content: currentResponse });
+                // 更新文档历史映射
+                documentHistories.set(itemId, multiTurnHistory);
               }
             }
           } catch (error) {
