@@ -218,38 +218,38 @@ export class UIExampleFactory {
         l10nID: getLocaleID("item-section-example1-head-text"),
         icon: `chrome://${config.addonRef}/content/icons/openai@0.5x.png`,
       },
-      bodyXHTML: `<html:div style="display: flex; flex-direction: column; padding: 4px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 100%; box-sizing: border-box; height: 100%; font-size: 12px; color: var(--color-text-primary);">
+      bodyXHTML: `<html:div style="display: flex; flex-direction: column; padding: 4px; font-family: inherit; max-width: 100%; box-sizing: border-box; height: 100%; font-size: 12px; color: var(--color-text-primary);">
         <html:div style="display: flex; flex-direction: row; gap: 4px; margin-bottom: 8px; width: 100%;">
-          <html:button id="add_selection_btn" style="flex-grow: 1; padding: 4px 8px; background-color: var(--color-background-secondary); border: 1px solid var(--color-border); border-radius: 2px; cursor: pointer; font-size: 14px; color: var(--color-text-primary);">
-            <html:span>Add Selection</html:span>
+          <html:button id="add_selection_btn" style="flex-grow: 1; padding: 4px 8px; background-color: var(--color-background-secondary); border: 1px solid var(--color-border); border-radius: 2px; cursor: pointer; font-size: 14px; color: var(--color-text-primary); font-family: inherit;">
+            <html:span style="font-family: inherit;">Add Selection</html:span>
           </html:button>
-          <html:button id="add_fulltext_btn" style="flex-grow: 1; padding: 4px 8px; background-color: var(--color-background-secondary); border: 1px solid var(--color-border); border-radius: 2px; cursor: pointer; font-size: 14px; color: var(--color-text-primary);">
-            <html:span>Add Full Text</html:span>
+          <html:button id="add_fulltext_btn" style="flex-grow: 1; padding: 4px 8px; background-color: var(--color-background-secondary); border: 1px solid var(--color-border); border-radius: 2px; cursor: pointer; font-size: 14px; color: var(--color-text-primary); font-family: inherit;">
+            <html:span style="font-family: inherit;">Add Full Text</html:span>
           </html:button>
-          <html:button id="clear_btn" style="flex-grow: 1; padding: 4px 8px; background-color: var(--color-background-secondary); border: 1px solid var(--color-border); border-radius: 2px; cursor: pointer; font-size: 14px; color: var(--color-text-primary);">
-            <html:span>Clear</html:span>
+          <html:button id="clear_btn" style="flex-grow: 1; padding: 4px 8px; background-color: var(--color-background-secondary); border: 1px solid var(--color-border); border-radius: 2px; cursor: pointer; font-size: 14px; color: var(--color-text-primary); font-family: inherit;">
+            <html:span style="font-family: inherit;">Clear</html:span>
           </html:button>
         </html:div>
         <html:textarea id="pdftext" style="width: 100%; box-sizing: border-box; min-height: 80px; padding: 6px; font-size: 12px; border: 1px solid var(--color-border); border-radius: 2px; margin-bottom: 8px; resize: vertical; font-family: inherit; background-color: var(--color-background-primary); color: var(--color-text-primary);" placeholder="PDF Content Area (Insert full or selected text)"></html:textarea>
         <html:textarea id="userquery" style="width: 100%; box-sizing: border-box; min-height: 48px; padding: 6px; font-size: 12px; border: 1px solid var(--color-border); border-radius: 2px; margin-bottom: 8px; resize: vertical; font-family: inherit; background-color: var(--color-background-primary); color: var(--color-text-primary);" placeholder="Please enter your question..."></html:textarea>
         <html:div style="display: flex; margin-bottom: 8px; width: 100%; gap: 4px;">
-          <html:button id="associate_btn" title="联想" style="width: 36px; padding: 4px 0; background-color: var(--color-background-secondary); border: 1px solid var(--color-border); border-radius: 2px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
-            <html:span style="display: flex; align-items: center; justify-content: center;">
+          <html:button id="associate_btn" title="联想" style="width: 36px; padding: 4px 0; background-color: var(--color-background-secondary); border: 1px solid var(--color-border); border-radius: 2px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-family: inherit;">
+            <html:span style="display: flex; align-items: center; justify-content: center; font-family: inherit;">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12ZM11.9851 4.00291C11.9933 4.00046 11.9982 4.00006 11.9996 4C12.001 4.00006 12.0067 4.00046 12.0149 4.00291C12.0256 4.00615 12.047 4.01416 12.079 4.03356C12.2092 4.11248 12.4258 4.32444 12.675 4.77696C12.9161 5.21453 13.1479 5.8046 13.3486 6.53263C13.6852 7.75315 13.9156 9.29169 13.981 11H10.019C10.0844 9.29169 10.3148 7.75315 10.6514 6.53263C10.8521 5.8046 11.0839 5.21453 11.325 4.77696C11.5742 4.32444 11.7908 4.11248 11.921 4.03356C11.953 4.01416 11.9744 4.00615 11.9851 4.00291ZM8.01766 11C8.08396 9.13314 8.33431 7.41167 8.72334 6.00094C8.87366 5.45584 9.04762 4.94639 9.24523 4.48694C6.48462 5.49946 4.43722 7.9901 4.06189 11H8.01766ZM4.06189 13H8.01766C8.09487 15.1737 8.42177 17.1555 8.93 18.6802C9.02641 18.9694 9.13134 19.2483 9.24522 19.5131C6.48461 18.5005 4.43722 16.0099 4.06189 13ZM10.019 13H13.981C13.9045 14.9972 13.6027 16.7574 13.1726 18.0477C12.9206 18.8038 12.6425 19.3436 12.3823 19.6737C12.2545 19.8359 12.1506 19.9225 12.0814 19.9649C12.0485 19.9852 12.0264 19.9935 12.0153 19.9969C12.0049 20.0001 11.9999 20 11.9999 20C11.9999 20 11.9948 20 11.9847 19.9969C11.9736 19.9935 11.9515 19.9852 11.9186 19.9649C11.8494 19.9225 11.7455 19.8359 11.6177 19.6737C11.3575 19.3436 11.0794 18.8038 10.8274 18.0477C10.3973 16.7574 10.0955 14.9972 10.019 13ZM15.9823 13C15.9051 15.1737 15.5782 17.1555 15.07 18.6802C14.9736 18.9694 14.8687 19.2483 14.7548 19.5131C17.5154 18.5005 19.5628 16.0099 19.9381 13H15.9823ZM19.9381 11C19.5628 7.99009 17.5154 5.49946 14.7548 4.48694C14.9524 4.94639 15.1263 5.45584 15.2767 6.00094C15.6657 7.41167 15.916 9.13314 15.9823 11H19.9381Z" fill="currentColor"></path></svg>
             </html:span>
           </html:button>
-          <html:button id="multiturn_btn" title="多轮对话" style="width: 36px; padding: 4px 0; background-color: var(--color-background-secondary); border: 1px solid var(--color-border); border-radius: 2px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
-            <html:span style="display: flex; align-items: center; justify-content: center;">
+          <html:button id="multiturn_btn" title="多轮对话" style="width: 36px; padding: 4px 0; background-color: var(--color-background-secondary); border: 1px solid var(--color-border); border-radius: 2px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-family: inherit;">
+            <html:span style="display: flex; align-items: center; justify-content: center; font-family: inherit;">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-[18px] w-[18px]">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4C3.89543 4 3 4.89543 3 6V17C3 17.5523 3.44772 18 4 18H6V21L10 18H19C20.1046 18 21 17.1046 21 16V6C21 4.89543 20.1046 4 19 4H5ZM5 6H19V16H9.58579L7 17.9142V16H5V6Z" fill="currentColor"/>
               </svg>
             </html:span>
           </html:button>
-          <html:button id="uquery_btn" style="flex-grow: 1; padding: 4px 8px; background-color: var(--color-background-secondary); border: 1px solid var(--color-border); border-radius: 2px; cursor: pointer; font-size: 14px; color: var(--color-text-primary);">
-            <html:span>Ask AI</html:span>
+          <html:button id="uquery_btn" style="flex-grow: 1; padding: 4px 8px; background-color: var(--color-background-secondary); border: 1px solid var(--color-border); border-radius: 2px; cursor: pointer; font-size: 14px; color: var(--color-text-primary); font-family: inherit;">
+            <html:span style="font-family: inherit;">Ask AI</html:span>
           </html:button>
-          <html:button id="summarize_btn" style="flex-grow: 1; padding: 4px 8px; background-color: var(--color-background-secondary); border: 1px solid var(--color-border); border-radius: 2px; cursor: pointer; font-size: 14px; color: var(--color-text-primary);">
-            <html:span>Summarize</html:span>
+          <html:button id="summarize_btn" style="flex-grow: 1; padding: 4px 8px; background-color: var(--color-background-secondary); border: 1px solid var(--color-border); border-radius: 2px; cursor: pointer; font-size: 14px; color: var(--color-text-primary); font-family: inherit;">
+            <html:span style="font-family: inherit;">Summarize</html:span>
           </html:button>
         </html:div>
         <html:textarea id="result" style="width: 100%; box-sizing: border-box; flex-grow: 2; min-height: 120px; padding: 6px; font-size: 12px; border: 1px solid var(--color-border); border-radius: 2px; resize: vertical; font-family: inherit; background-color: var(--color-background-primary); color: var(--color-text-primary); word-wrap: break-word;" placeholder="AI response will appear here..."></html:textarea>
