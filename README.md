@@ -15,7 +15,7 @@ A Zotero plugin that integrates GPT functionalities into the PDF reader sidebar.
 ## Main Features
 
 - [x] 🔁 **Multi-turn Conversation**: Supports continuous dialogue with context memory.
-- [x] 🌐 **Smart Exploration**: Generate keywords from paper abstracts and search PubMed via Google Programmable Search Engine to discover related research and up-to-date information.
+- [x] 🌐 **Smart Exploration**: Generate keywords from paper abstracts and search via Google Programmable Search Engine to discover related research and up-to-date information.
 - [x] 📄 **PDF Sidebar Integration**: Seamlessly appears in the Zotero PDF reader sidebar for quick access.
 - [x] 🔍 **Text Selection & Full Text Support**: Insert selected text or the entire PDF content into the AI query area with one click.
 - [x] 💬 **Ask AI Anything**: Directly ask GPT questions about the PDF content and get instant answers.
@@ -30,7 +30,8 @@ A Zotero plugin that integrates GPT functionalities into the PDF reader sidebar.
 - Get `.xpi` file: [download latest](https://github.com/KravornN/Zotero-easyGPT/releases/latest/download/zotero-easy-gpt.xpi) release `.xpi` file
 - Install `.xpi` file in Zotero
 - Open Zotero-easyGPT setting
-- (Optional) Enter the Google [PSE](https://programmablesearchengine.google.com/about/) ID and key. Note: restrict the searchable sites to`pubmed.ncbi.nlm.nih.gov/*`
+- (Optional) Enter the Google [PSE](https://programmablesearchengine.google.com/about/) ID and key.
+  - You can choose to restrict searches to PubMed (`pubmed.ncbi.nlm.nih.gov/*`) or search the entire web
 - (Optional) Enter the [jina.ai](https://jina.ai/api-dashboard) key
 
 ### 中国用户

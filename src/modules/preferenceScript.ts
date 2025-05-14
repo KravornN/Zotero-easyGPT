@@ -163,4 +163,14 @@ function bindPrefEvents() {
       ztoolkit.log(e);
       showNotification(`Model name saved successfully!`);
     });
+
+  // PSE 搜索结果数输入框
+  addon.data
+    .prefs!.window.document.querySelector(
+      `#zotero-prefpane-${config.addonRef}-pse_count`,
+    )
+    ?.addEventListener("change", (e) => {
+      ztoolkit.log(e);
+      showNotification(`PSE搜索结果数已保存！`);
+    });
 }

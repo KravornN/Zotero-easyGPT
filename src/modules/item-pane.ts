@@ -321,32 +321,26 @@ export class UIExampleFactory {
         }
         if (multiturn_btn) {
           multiturn_btn.addEventListener("click", () => {
-            multiTurnActive = !multiTurnActive;            if (multiTurnActive) {
+            multiTurnActive = !multiTurnActive;
+            if (multiTurnActive) {
               multiturn_btn.style.backgroundColor = "#1976d2";
               multiturn_btn.style.borderColor = "#1976d2";
-              
-              // If there's a current response and history is empty, add the current QA to history
+
+              // 新逻辑：只要有AI回复（currentResponse），且历史为空，就记忆本轮，无论输入框内容
               if (currentResponse && multiTurnHistory.length === 0) {
-                const systemPromptLang = (getPref('lang') as string || 'zh-CN') === 'en-US' 
+                const systemPromptLang = (getPref('lang') as string || 'zh-CN') === 'en-US'
                   ? 'You are an academic assistant. Please answer my question in clear and accurate English based on the provided paper content. Do not use Markdown format, keep the output as plain text.'
                   : '请你扮演一位学术助手，根据提供的论文内容，使用中文回答我的问题。请确保表达清晰准确，不使用Markdown格式，保持纯文本输出。';
-                
                 multiTurnHistory.push({ role: 'system', content: systemPromptLang });
-                
-                // Add the most recent query and response to history
-                if (pdftext.value && userquery.value) {
-                  multiTurnHistory.push({ role: 'user', content: pdftext.value + '\n' + userquery.value });
-                  multiTurnHistory.push({ role: 'assistant', content: currentResponse });
-                }
+                // 记忆本轮，无论输入框内容
+                multiTurnHistory.push({ role: 'user', content: pdftext.value + (userquery.value ? ('\n' + userquery.value) : '') });
+                multiTurnHistory.push({ role: 'assistant', content: currentResponse });
               }
-              
-              // 将当前对话历史保存到文档特定的映射中
               documentHistories.set(itemId, multiTurnHistory);
             } else {
               multiturn_btn.style.backgroundColor = "var(--color-background-secondary)";
               multiturn_btn.style.borderColor = "var(--color-border)";
               multiTurnHistory = [];
-              // 清空当前文档的历史记录
               documentHistories.set(itemId, []);
             }
           });
@@ -599,6 +593,9 @@ export class UIExampleFactory {
         async function fetchAssociativeContent(abstract: string): Promise<{content?: string, error?: string}> {
           const pse_id = getPref('pse_id');
           const pse_key = getPref('pse_key');
+          // 新增：读取自定义PSE结果数
+          let pse_count = Number(getPref('pse_count'));
+          if (!pse_count || pse_count < 1) pse_count = 5;
           if (!pse_id || !pse_key) return { error: 'PSE id/key not set.' };
           
           // Generate a cache key from the abstract
@@ -624,8 +621,8 @@ export class UIExampleFactory {
           ztoolkit.log(`[fetchAssociativeContent] Keywords for PSE: "${query}"`);
 
           try {
-            ztoolkit.log(`[fetchAssociativeContent] Calling searchGooglePSE, requesting 5 results.`);
-            const pseResults = await searchGooglePSE(String(pse_key), String(pse_id), query, 5);
+            ztoolkit.log(`[fetchAssociativeContent] Calling searchGooglePSE, requesting ${pse_count} results.`);
+            const pseResults = await searchGooglePSE(String(pse_key), String(pse_id), query, pse_count);
             ztoolkit.log(`[fetchAssociativeContent] searchGooglePSE returned ${pseResults.length} results.`);
 
             if (!pseResults.length) {
