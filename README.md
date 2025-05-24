@@ -1,10 +1,10 @@
 # Zotero-easyGPT
 
 <div align="center">
-  <img src="logo.png" width="77%" />
+  <img src="logo.png" width="80%" />
 </div>
 
-A Zotero plugin that integrates GPT functionalities into the PDF reader sidebar. Ask questions about or summarize PDF content directly within Zotero. 
+A plugin that integrates Large Language Models functionalities into Zotero. Ask questions about or summarize PDF content directly within Zotero. 
 
 [![Using Zotero Plugin Template](https://img.shields.io/badge/Using-Zotero%20Plugin%20Template-blue?style=flat-square&logo=github)](https://github.com/windingwind/zotero-plugin-template)
 [![License](https://img.shields.io/github/license/KravornN/Zotero-easyGPT?style=flat-square)](https://github.com/KravornN/Zotero-easyGPT/blob/main/LICENSE)
