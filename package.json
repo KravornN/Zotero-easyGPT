@@ -1,7 +1,7 @@
 {
   "name": "zotero-easygpt",
   "type": "module",
-  "version": "0.2.0",
+  "version": "0.0.1",
   "description": "Zotero easyGPT",
   "config": {
     "addonName": "Zotero easyGPT",
