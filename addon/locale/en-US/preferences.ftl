@@ -1,0 +1,14 @@
+pref-title = settings
+pref-input = API Key:
+pref-base = Base URL:
+pref-model = Model1:
+pref-multi-model = Model2 (Multiple Papers):
+pref-pdf-engine = PDF Engine (OpenRouter):
+pref-pdf-engine-auto = Auto
+pref-pdf-engine-native = Native
+pref-pdf-engine-pdf-text = PDF-Text
+pref-pdf-engine-mistral-ocr = Mistral OCR
+pref-help = { $name } Build { $version } { $time }
+pref-lang = Answer Language:
+pref-lang-zh = Chinese
+pref-lang-en = English

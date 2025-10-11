@@ -1,0 +1,37 @@
+<linkset>
+  <html:link rel="localization" href="__addonRef__-preferences.ftl" />
+</linkset>
+<groupbox style="padding: 14px; font-family: inherit;" onload="Zotero.__addonInstance__.hooks.onPrefsEvent('load', { window });">
+  <label>
+    <html:h2 style="margin-top: 0; margin-bottom: 14px; font-size: 16px; font-weight: 600; color: var(--color-text-primary); font-family: inherit;" data-l10n-id="pref-title"></html:h2>
+  </label>
+
+  <html:div style="display: grid; grid-template-columns: 170px 1fr; gap: 7px; margin-bottom: 12px; align-items: center;">
+    <html:label for="__addonRef__-input" style="font-size: 13px; color: var(--color-text-primary); font-family: inherit; display: flex; align-items: center; white-space: nowrap;" data-l10n-id="pref-input"></html:label>
+    <html:input type="text" id="__addonRef__-input" style="padding: 1px 0 1px 7px; border: none; border-bottom: 1.5px solid #bbb; border-radius: 6px 6px 0 0; font-size: 13px; height: 22px; width: 100%; background-color: rgba(120,120,120,0.06); outline: none; font-family: inherit;" preference="__prefsPrefix__.input"></html:input>
+    
+    <html:label for="__addonRef__-base" style="font-size: 13px; color: var(--color-text-primary); font-family: inherit; display: flex; align-items: center; white-space: nowrap;" data-l10n-id="pref-base"></html:label>
+    <html:input type="text" id="__addonRef__-base" style="padding: 1px 0 1px 7px; border: none; border-bottom: 1.5px solid #bbb; border-radius: 6px 6px 0 0; font-size: 13px; height: 22px; width: 100%; background-color: rgba(120,120,120,0.06); outline: none; font-family: inherit;" preference="__prefsPrefix__.base"></html:input>
+    
+    <html:label for="__addonRef__-model" style="font-size: 13px; color: var(--color-text-primary); font-family: inherit; display: flex; align-items: center; white-space: nowrap;" data-l10n-id="pref-model"></html:label>
+    <html:input type="text" id="__addonRef__-model" style="padding: 1px 0 1px 7px; border: none; border-bottom: 1.5px solid #bbb; border-radius: 6px 6px 0 0; font-size: 13px; height: 22px; width: 100%; background-color: rgba(120,120,120,0.06); outline: none; font-family: inherit;" preference="__prefsPrefix__.model"></html:input>
+
+    <html:label for="__addonRef__-multiModel" style="font-size: 13px; color: var(--color-text-primary); font-family: inherit; display: flex; align-items: center; white-space: nowrap;" data-l10n-id="pref-multi-model"></html:label>
+    <html:input type="text" id="__addonRef__-multiModel" style="padding: 1px 0 1px 7px; border: none; border-bottom: 1.5px solid #bbb; border-radius: 6px 6px 0 0; font-size: 13px; height: 22px; width: 100%; background-color: rgba(120,120,120,0.06); outline: none; font-family: inherit;" preference="__prefsPrefix__.multiModel"></html:input>
+
+    <html:label for="__addonRef__-pdfEngine" style="font-size: 13px; color: var(--color-text-primary); font-family: inherit; display: flex; align-items: center; white-space: nowrap;" data-l10n-id="pref-pdf-engine"></html:label>
+  <html:select id="__addonRef__-pdfEngine" style="padding: 1px 4px 1px 7px; border: none; border-bottom: 1.5px solid #bbb; border-radius: 4px 4px 0 0; font-size: 13px; height: 24px; width: auto; min-width: 120px; max-width: 200px; background-color: rgba(120,120,120,0.06); color: var(--color-text-primary); line-height: 1.2; outline: none; font-family: inherit;" preference="__prefsPrefix__.pdfEngine">
+      <html:option value="auto" data-l10n-id="pref-pdf-engine-auto"></html:option>
+      <html:option value="native" data-l10n-id="pref-pdf-engine-native"></html:option>
+      <html:option value="pdf-text" data-l10n-id="pref-pdf-engine-pdf-text"></html:option>
+      <html:option value="mistral-ocr" data-l10n-id="pref-pdf-engine-mistral-ocr"></html:option>
+    </html:select>
+
+    <html:label for="__addonRef__-lang" style="font-size: 13px; color: var(--color-text-primary); font-family: inherit; display: flex; align-items: center; white-space: nowrap;" data-l10n-id="pref-lang"></html:label>
+  <html:select id="__addonRef__-lang" style="padding: 1px 4px 1px 7px; border: none; border-bottom: 1.5px solid #bbb; border-radius: 4px 4px 0 0; font-size: 13px; height: 24px; width: auto; min-width: 100px; max-width: 150px; background-color: rgba(120,120,120,0.06); color: var(--color-text-primary); line-height: 1.2; outline: none; font-family: inherit;" preference="__prefsPrefix__.lang">
+      <html:option value="zh-CN" data-l10n-id="pref-lang-zh"></html:option>
+      <html:option value="en-US" data-l10n-id="pref-lang-en"></html:option>
+    </html:select>
+  </html:div>
+  
+</groupbox>

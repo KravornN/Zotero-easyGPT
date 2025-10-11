@@ -1,0 +1,22 @@
+# Zotero插件构建和临时文件
+build/
+node_modules/
+.DS_Store
+*.xpi
+*.zip
+npm-debug.log
+log.txt
+.svn
+.git
+
+# IDE相关文件
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# 其他可能的临时文件
+tmp/
+temp/
+.env 
